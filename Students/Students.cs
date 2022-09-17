@@ -4,15 +4,16 @@ using System.Text;
 
 namespace Students
 {
-   public class Students
+   public class Students 
     {
         public string NameStudents { get; set; }
         public int AgeStudents { get; set; }
-        public int AcademicPerformance { get; set; }
-        public int Sex { get; set; }
+        public bool AcademicPerformance { get; set; }
+        public bool Sex { get; set; }
         public bool BoolIsExpelled { get; set; }
+        public int Recklessness { get; set; }
 
-        public Students(string name, int age, int sex, int AP, bool BE)
+        public Students(string name, int age, bool sex, bool AP, bool BE,int Reckless)
         {
             NameStudents = name;
             AgeStudents = age;
