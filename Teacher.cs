@@ -5,19 +5,14 @@ namespace University
 {
     public class Teacher : Person
     {
-        public int Teachinglevel { get; set; }
-        public string Subject { get; set; }
+        public int TeachingLevel { get; set; }
+        public Subject Subject { get; set; }
 
-        public Teacher(string name, int sex, string subject) : base(name, sex)
+        public Teacher(string name, int sex, Subject subject) : base(name, sex)
         {
-            Random x = new Random();
-            int teachinglevel = x.Next(0, 10);
-            Teachinglevel = teachinglevel;
+            int randomTeachingLevel = new Random().Next(0, 11);
+            TeachingLevel = randomTeachingLevel;
             Subject = subject;
-        }
-        public int TL1()
-        {
-            return Teachinglevel;
         }
         public void ConductingAnExam()
         {
