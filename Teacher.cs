@@ -9,12 +9,20 @@ namespace University
         public int TeachingLevel { get; set; }
         public Subject Subject { get; set; }
 
-        public Teacher(string name, int sex, Subject subject) : base(name, sex)
+        private Teacher(Subject subject) : base() //parent constructor only requires name parameter
                                                          
         {
             int randomTeachingLevel = new Random().Next(0, 11);
             TeachingLevel = randomTeachingLevel;
             Subject = subject;
+        }
+
+        public static Teacher CreateNew(Subject subject) //Serves as a public constructor.
+                                                                      //Needed to assign teacher to a subject
+        {
+            var newTeacher = new Teacher(subject);
+            subject.Teacher = newTeacher;
+            return newTeacher;
         }
 
         public void ConductAnExam() 
