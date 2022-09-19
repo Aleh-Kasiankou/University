@@ -15,14 +15,15 @@ namespace University
             Name = name;
         }
 
-        public void HireStaff() //here we will create both subjects and teachers (potentially could create a
-                                                                                    //new method for subjects)
+        public void HireStaff(object university) 
         {
-            List<Subject> Subjects  = new List<Subject>();
             int numberofstuff = Subjects.Count;
-            for (int numberofstaff; numberofstuff>0; numberofstuff--)
+            for (; numberofstuff>0; numberofstuff--)
             {
-                
+                var subject = new Subject(DataProvider.GenerateSubjectName(university));
+                Subjects.Add(subject);
+                var teacher = Teacher.CreateNew(subject);
+                Staff.Add(teacher);
             }
 
         }
