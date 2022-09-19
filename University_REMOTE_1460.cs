@@ -19,7 +19,7 @@ namespace University
         }
         
         public void AdmitStudents(int status)
-        {    
+        {
             StatusOfStudents = status
         }
         
