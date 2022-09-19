@@ -35,7 +35,7 @@ namespace University
             return HumanNames[sex][randomNameIndex];
         }
 
-        public static string GenerateSubjectName(University university)
+        public static string GenerateSubjectName(University university, out bool isGenerationFinished)
         {
             var usedSubjectNames = new List<string>();
 
@@ -43,6 +43,8 @@ namespace University
             {
                 usedSubjectNames.Add(subject.Name);
             }
+
+            isGenerationFinished = SubjectNames.Count - usedSubjectNames.Count == 1;
 
             return SubjectNames.First(name => !usedSubjectNames.Contains(name));
         }
