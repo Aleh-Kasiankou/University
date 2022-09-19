@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace University
 {
@@ -17,6 +18,13 @@ namespace University
         public void HireStaff() //here we will create both subjects and teachers (potentially could create a
                                                                                     //new method for subjects)
         {
+            List<Subject> Subjects  = new List<Subject>();
+            int numberofstuff = Subjects.Count;
+            for (int numberofstaff; numberofstuff>0; numberofstuff--)
+            {
+                
+            }
+
         }
         
         public void AdmitStudents()
