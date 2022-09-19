@@ -15,17 +15,24 @@ namespace University
             Name = name;
         }
 
-        public void HireStaff(object university) 
+        public void HireStaff(University university) 
         {
-            int numberofstuff = Subjects.Count;
-            for (; numberofstuff>0; numberofstuff--)
+            int numberofsubject = 0;
+            while (numberofsubject <= Subjects.Count)
             {
                 var subject = new Subject(DataProvider.GenerateSubjectName(university));
                 Subjects.Add(subject);
-                var teacher = Teacher.CreateNew(subject);
-                Staff.Add(teacher);
-            }
+                numberofsubject++;
 
+                for (int numberofstaff = 0; numberofstaff <= Subjects.Count; numberofstaff++)
+                {
+                    var teacher = Teacher.CreateNew(subject);
+                    Staff.Add(teacher);
+                }
+            }            
+                
+                         
+           
         }
         
         public void AdmitStudents()
