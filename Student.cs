@@ -14,7 +14,7 @@ namespace University
         {
             RecklessnessLevel = new Random().Next(1, 101);
         }
-
+        
         public void AttendClasses(Subject subject)
         {
         }
