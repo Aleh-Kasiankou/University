@@ -14,18 +14,7 @@ namespace University
         {
             RecklessnessLevel = new Random().Next(1, 101);
         }
-        public void AddStudent(int status)
-        {
-            Random rnd = new Random(10);
-            int randomNumberOfStudents = rnd.Next(10, 1000);
-            NumberOfStudents = randomNumberOfStudents;
-
-            var AddStudent = new AddStudent(student);
-            student.Student = AddStudent;
-            return AddStudent;
-
-        }
-
+        
         public void AttendClasses(Subject subject)
         {
         }
