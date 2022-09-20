@@ -15,7 +15,7 @@ namespace University
         {
             RecklessnessLevel = new Random().Next(1, 81); //totally crazy students are not likely to be admitted 
         }
-
+        
         public void StudySubject(Subject subject)
         {
             var missesIndex = (subject.Teacher.TeachingLevel * 10 - RecklessnessLevel) / 2;
@@ -23,7 +23,7 @@ namespace University
             AcademicPerformance[subject] = 50 + missesIndex;
         }
 
-        public void TakeAnExam(Exam exam)
+        public void TakeExam(Exam exam)
         {
             ExamPerformance[exam.Teacher.Subject] = AcademicPerformance[exam.Teacher.Subject] >= exam.PassingScore;
         }

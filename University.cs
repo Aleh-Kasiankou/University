@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Schema;
 
 namespace University
 {
@@ -9,57 +8,34 @@ namespace University
     {
         public string Name { get; set; }
 
-        private int _capacityStudents;
-
-        public int CapacityStudents
-        {
-            get { return _capacityStudents; }
-            set
-            {
-                if (!(value >= 100 && value <= 1000))
-                {
-                    throw new Exception(message: "The number of students is not allowed. " +
-                                                 "Please use values in range 100 - 1000");
-                }
-
-                _capacityStudents = value;
-            }
-        }
-
+        public int StudentsCapacity { get; }
         public List<Teacher> Staff { get; set; } = new List<Teacher>();
         public List<Student> Students { get; set; } = new List<Student>();
         public List<Subject> Subjects { get; set; } = new List<Subject>();
         public List<Exam> Exams { get; set; } = new List<Exam>();
 
-        public University(string name, int capacityStudents = 500)
+        public University(string name, int studentsNumber = 500)
         {
             Name = name;
-            CapacityStudents = capacityStudents;
+            if (studentsNumber < 100 || studentsNumber > 1000)
+            {
+                throw new Exception(message:"Only 100-1000 can study at this univercity");
+            }
+            
+            StudentsCapacity = studentsNumber;
         }
 
-        public void HireStaff() //add support for many to one teacher - subject relation
+        public void HireStaff()
+            
         {
-            while (true)
-            {
-                var subject = new Subject(DataProvider.GenerateSubjectName(this, out var generationFinished));
-                Subjects.Add(subject);
-                if (generationFinished)
-                {
-                    break;
-                }
-            }
-
-            foreach (var subject in Subjects)
-            {
-                var teacher = Teacher.CreateNew(this,subject);
-                Staff.Add(teacher);
-            }
+            GenerateCurriculum();
+            HireTeachers();
         }
 
 
         public void AdmitStudents()
         {
-            while (Students.Count < CapacityStudents)
+            for (int studentsGenerated = 0; studentsGenerated < StudentsCapacity; studentsGenerated++)
             {
                 var student = new Student();
                 Students.Add(student);
