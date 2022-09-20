@@ -26,7 +26,7 @@ namespace University
             },
         };
 
-        private static List<string> SubjectNames { get; } = new List<string>()
+        public static List<string> SubjectNames { get; } = new List<string>()
             { "Math", "Foreign Language", "International Law", "Science", "PE", "Debates" };
 
         public static string GeneratePersonName(Sex sex)

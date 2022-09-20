@@ -15,33 +15,41 @@ namespace University
             Name = name;
         }
 
-        public void HireStaff(University university) 
+        public void HireStaff() //method is not static, no need to pass university to it,
+            //because the method will automatically interact with the class instance that called it
         {
-            int numberofsubject = 0;
-            while (numberofsubject <= Subjects.Count)
-            {
-                var subject = new Subject(DataProvider.GenerateSubjectName(university));
-                Subjects.Add(subject);
-                numberofsubject++;
-
-                for (int numberofstaff = 0; numberofstaff <= Subjects.Count; numberofstaff++)
-                {
-                    var teacher = Teacher.CreateNew(subject);
-                    Staff.Add(teacher);
-                }
-            }            
-                
-                         
-           
+            GenerateCurriculum();
+            HireTeachers();
         }
-        
+
         public void AdmitStudents()
         {
         }
-        
+
         public void StartAcademicYear()
         {
         }
 
+        private void GenerateCurriculum()
+        {
+            int numberOfSubjects = 0;
+            while (numberOfSubjects < DataProvider.SubjectNames.Count)
+                // while (numberofsubject <= Subjects.Count) Subjects.Count is 0 by default.
+            {
+                var subject = new Subject(DataProvider.GenerateSubjectName(this));
+                //this is a keyword that returns the object owner of the method
+                Subjects.Add(subject);
+                numberOfSubjects++;
+            }
+        }
+
+        private void HireTeachers()
+        {
+            foreach (var subject in Subjects)
+            {
+                var teacher = Teacher.CreateNew(subject);
+                Staff.Add(teacher);
+            }
+        }
     }
 }
