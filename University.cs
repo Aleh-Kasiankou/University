@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace University
 {
@@ -14,18 +15,41 @@ namespace University
             Name = name;
         }
 
-        public void HireStaff() //here we will create both subjects and teachers (potentially could create a
-                                                                                    //new method for subjects)
+        public void HireStaff() //method is not static, no need to pass university to it,
+            //because the method will automatically interact with the class instance that called it
         {
+            GenerateCurriculum();
+            HireTeachers();
         }
-        
+
         public void AdmitStudents()
         {
         }
-        
+
         public void StartAcademicYear()
         {
         }
 
+        private void GenerateCurriculum()
+        {
+            int numberOfSubjects = 0;
+            while (numberOfSubjects < DataProvider.SubjectNames.Count)
+                // while (numberofsubject <= Subjects.Count) Subjects.Count is 0 by default.
+            {
+                var subject = new Subject(DataProvider.GenerateSubjectName(this));
+                //this is a keyword that returns the object owner of the method
+                Subjects.Add(subject);
+                numberOfSubjects++;
+            }
+        }
+
+        private void HireTeachers()
+        {
+            foreach (var subject in Subjects)
+            {
+                var teacher = Teacher.CreateNew(subject);
+                Staff.Add(teacher);
+            }
+        }
     }
 }
