@@ -61,7 +61,7 @@ namespace University
             {
                 foreach (var exam in Exams)
                 {
-                    student.TakeAnExam(exam);
+                    student.TakeExam(exam);
                     for (int reexaminationAttempt = 1; reexaminationAttempt < 3; reexaminationAttempt++)
                     {
                         student.RetakeAnExam(exam, reexaminationAttempt);
@@ -89,6 +89,28 @@ namespace University
             Students = (from student in Students where !student.IsToBeExpelled select student).ToList();
             
             Console.WriteLine(excludedStudents.Count + " were excluded from the university");
+        }
+        
+        private void GenerateCurriculum()
+        {
+            int numberOfSubjects = 0;
+            while (numberOfSubjects < DataProvider.SubjectNames.Count)
+                // while (numberofsubject <= Subjects.Count) Subjects.Count is 0 by default.
+            {
+                var subject = new Subject(DataProvider.GenerateSubjectName(this));
+                //this is a keyword that returns the object owner of the method
+                Subjects.Add(subject);
+                numberOfSubjects++;
+            }
+        }
+
+        private void HireTeachers()
+        {
+            foreach (var subject in Subjects)
+            {
+                var teacher = Teacher.CreateNew(this, subject);
+                Staff.Add(teacher);
+            }
         }
     }
 }

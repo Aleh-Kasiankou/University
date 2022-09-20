@@ -31,7 +31,7 @@ namespace University
         public void RetakeAnExam(Exam exam, int attempt)
         {
             PrepareForReexamination(exam, attempt);
-            TakeAnExam(exam);
+            TakeExam(exam);
         }
 
         private void PrepareForReexamination(Exam exam, int attempt)
