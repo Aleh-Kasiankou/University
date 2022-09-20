@@ -8,10 +8,10 @@ namespace University
         public Sex Sex { get; }
         
 
-        public Person(string name)
+        public Person()
         {
-            Name = name;
             Sex = (Sex) new Random().Next(0,2);
+            Name = DataProvider.GeneratePersonName(Sex);
         }
     }
     

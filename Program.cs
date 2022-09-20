@@ -10,7 +10,6 @@ namespace University
             university.HireStaff();
             university.AdmitStudents();
             university.StartAcademicYear();
-
         }
     }
 }

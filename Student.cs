@@ -10,7 +10,7 @@ namespace University
         private Dictionary<Subject, int> AcademicPerformance { get; set; } = new Dictionary<Subject, int>();
         private Dictionary<Subject, bool> ExamPerformance { get; set; } = new Dictionary<Subject, bool>();
 
-        public Student(string name) : base(name)
+        public Student()
         {
             RecklessnessLevel = new Random().Next(1, 101);
         }
