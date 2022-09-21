@@ -46,5 +46,10 @@ namespace University
 
             return SubjectNames.First(name => !usedSubjectNames.Contains(name));
         }
+
+        public static string GenerateDepartmentName(Field field)
+        {
+            return "Not Implemented";
+        }
     }
 }
