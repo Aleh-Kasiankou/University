@@ -10,6 +10,12 @@ namespace University
         public int StrictnessLevel { get; set; }
         public Department Department { get; set; }
         public Subject Subject { get; set; }
+        public string Scientifictitle = "Professor";
+        public new string Name
+        {
+            get => Scientifictitle + base.Name;
+            set => base.Name = value;
+        }
 
         private Teacher(Department department,Subject subject) : base() 
                                                          
