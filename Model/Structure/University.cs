@@ -11,8 +11,9 @@ namespace University
         public Field Field { get; set; }
 
         public List<Department> Departments { get; } = new List<Department>();
+        public List<IStaffMember> Administration { get; } = new List<IStaffMember>();
 
-        public University(string name, int studentsNumber = 500)
+        private University(string name, int studentsNumber = 500)
         {
             Name = name;
 
@@ -26,10 +27,20 @@ namespace University
             Field = (Field)new Random().Next(Enum.GetNames(typeof(Field)).Length);
         }
 
-        private void HireStaff() //why calling another method? Encapsulation?
+        public static University CreateNew(string name, int studentsNumber = 500)
+        {
+            var university = new University(name, studentsNumber);
+            university.Administration.Add(new Hr(university));
+            university.Administration.Add(new Rector(university));
+            return university;
+        }
+
+        private void PrepareForYear()
 
         {
-            HireTeachers();
+            GenerateDepartments();
+            var hrSpecialist = Administration.First(specialist => specialist is Hr);
+            hrSpecialist.Work();
         }
 
 
@@ -38,7 +49,7 @@ namespace University
             foreach (var department in Departments)
             {
                 int optimalStudentsCount;
-                if ( Equals(department, Departments.Last()))
+                if (Equals(department, Departments.Last()))
                 {
                     optimalStudentsCount = StudentsCapacity -
                                            (from dep in Departments select dep.Students.Count).Sum();
@@ -48,52 +59,34 @@ namespace University
                 {
                     optimalStudentsCount = (StudentsCapacity / Departments.Count);
                 }
-                
-                for (int studentsGenerated = 0; studentsGenerated < optimalStudentsCount; studentsGenerated++)
+
+                while (department.Students.Count != optimalStudentsCount)
                 {
                     var student = new Student();
                     department.Students.Add(student);
-                } 
+                }
             }
-            
         }
 
         public void OperateOneYear()
         {
-            GenerateDepartments();
-            HireStaff();
+            PrepareForYear();
             AdmitStudents();
             foreach (var department in Departments)
             {
                 department.OperateOneYear();
             }
+            FinishYear();
         }
 
-        public void ExcludeStudents()
+        private void FinishYear()
         {
-            var excludedStudents = new List<Student>();
-
-            foreach (var department in Departments)
-            {
-                foreach (var student in department.Students)
-                {
-                    if (student.IsToBeExpelled)
-                    {
-                        excludedStudents.Add(student);
-                    }
-                }
-
-                department.Students = (from student in department.Students where !student.IsToBeExpelled select student)
-                    .ToList();
-            }
-
-
-            Console.WriteLine(excludedStudents.Count + " were excluded from the university");
+            var rector = Administration.First(specialist => specialist is Rector);
+            rector.Work();
         }
 
         private void GenerateDepartments()
         {
-            
             var optimalNumberOfDeps = (int)Math.Ceiling(StudentsCapacity / 200d);
             while (Departments.Count < optimalNumberOfDeps)
             {
@@ -103,24 +96,9 @@ namespace University
                     optimalNumberOfDeps = maxDepartments;
                 }
 
-                Departments.Add(new Department(this, name));
+                Departments.Add(Department.CreateNew(this, name));
             }
         }
-
         
-
-        private void HireTeachers()
-        {
-            foreach (var department in Departments)
-            {
-                foreach (var subject in department.Subjects) //add check if teacher is already hired
-                {
-                    var teacher = Teacher.CreateNew(department, subject);
-                    department.Staff.Add(teacher);
-                }
-                
-            }
-            
-        }
     }
 }

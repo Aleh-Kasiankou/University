@@ -4,9 +4,8 @@
     {
         static void Main(string[] args)
         {
-            var university = new University("Whatever");
+            var university = University.CreateNew("Whatever");
             university.OperateOneYear();
-            university.ExcludeStudents();
         }
     }
 }

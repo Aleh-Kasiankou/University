@@ -8,7 +8,7 @@ namespace University
         public int Year { get; private set; } = 1;
         public static int StudentsCapacity { get; } = 14;
         public University University { get; }
-        public List<Exam> Exams { get; set; } = new List<Exam>();
+        public List<Exam> Exams { get; set; } = new List<Exam>(); //implement logic for exams
         public List<Student> Students { get; set; }
         public IStructureElement ParentStructureElement { get; }
         public List<IStructureElement> ChildStructureElements { get; set; } = null;

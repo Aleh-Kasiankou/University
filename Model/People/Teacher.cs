@@ -8,7 +8,7 @@ namespace University
     {
         public int TeachingLevel { get; set; }
         public int StrictnessLevel { get; set; }
-        public Department Department { get; set; } //TODO use interface
+        public Department Department { get; set; }
         public Subject Subject { get; set; }
 
         private Teacher(Department department,Subject subject) : base() 

@@ -20,9 +20,9 @@ namespace University
         
         public void StudySubject(Subject subject)
         {
-            var missesIndex = (subject.Teacher.TeachingLevel * 10 - RecklessnessLevel) / 2;
+            var attendanceIndex = (subject.Teacher.TeachingLevel * 10 - RecklessnessLevel) / 2;
 
-            AcademicPerformance[subject] = 50 + missesIndex;
+            AcademicPerformance[subject] = 50 + attendanceIndex;
         }
 
         public void TakeExam(Exam exam)

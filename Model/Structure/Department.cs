@@ -16,11 +16,19 @@ namespace University
         public IStructureElement ParentStructureElement { get; } = null;
         public List<IStructureElement> ChildStructureElements { get; set; } = new List<IStructureElement>();
 
-        public Department(University university, string name)
+        private Department(University university, string name)
         {
             University = university;
             Name = name;
-            GenerateCurriculum();
+        }
+
+        public static Department CreateNew(University university, string name)
+        {
+            var department = new Department(university, name);
+            var dean = new Dean(department);
+            university.Administration.Add(dean);
+            dean.Work();
+            return department;
         }
 
         public void OperateOneYear()
@@ -58,26 +66,27 @@ namespace University
 
         private void GenerateCurriculum()
         {
-            int numberOfSubjects = 0;
-            while (numberOfSubjects < NameGenerator.SubjectNames.Count)
-                // while (numberofsubject <= Subjects.Count) Subjects.Count is 0 by default.
+            List<IStaffMember> deanList = University.Administration.FindAll(
+                specialist => specialist is Dean);
+
+            foreach (Dean dean in deanList)
             {
-                var subject = new Subject(NameGenerator.GenerateSubjectName(this));
-                //this is a keyword that returns the object owner of the method
-                Subjects.Add(subject);
-                numberOfSubjects++;
+                if (dean.Department == this)
+                {
+                    dean.Work();
+                    break;
+                }
             }
         }
 
         private void DivideStudentsToGroups()
         {
-            
             while (Students.Count(student => student.Group is null) > 0)
             {
-                
                 var groupStudents = new List<Student>();
                 var addedStudents = new List<Student>();
-                while (Students.Count(student => student.Group is null) > addedStudents.Count && groupStudents.Count < Group.StudentsCapacity)
+                while (Students.Count(student => student.Group is null) > addedStudents.Count &&
+                       groupStudents.Count < Group.StudentsCapacity)
                 {
                     var student = Students.First(student => student.Group is null && !addedStudents.Contains(student));
                     groupStudents.Add(student);
@@ -89,8 +98,10 @@ namespace University
                 {
                     student.Group = group;
                 }
+
                 ChildStructureElements.Add(group);
             }
+
             Group.ResetNameHash();
         }
     }
