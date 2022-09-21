@@ -81,9 +81,16 @@ namespace University
 
         private void GenerateDepartments()
         {
+            
             var optimalNumberOfDeps = (int)Math.Ceiling(StudentsCapacity / 200d);
             while (Departments.Count < optimalNumberOfDeps)
             {
+                var name = NameGenerator.GenerateDepartmentName(this, out var maxDepartments);
+                if (optimalNumberOfDeps > maxDepartments)
+                {
+                    optimalNumberOfDeps = maxDepartments;
+                }
+
                 int optimalStudentsCount;
                 if (Departments.Count == optimalNumberOfDeps - 1)
                 {
@@ -95,9 +102,8 @@ namespace University
                 {
                     optimalStudentsCount = (StudentsCapacity / optimalNumberOfDeps);
                 }
-
                 
-                Departments.Add(new Department(this, optimalStudentsCount ));
+                Departments.Add(new Department(this, name ,optimalStudentsCount ));
             }
         }
 

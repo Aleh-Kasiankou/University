@@ -12,11 +12,11 @@ namespace University
         public List<Exam> Exams { get; set; } = new List<Exam>();
         public List<Student> Students { get; set; } = new List<Student>();
 
-        public Department(University university, int studentsCapacity)
+        public Department(University university, string name, int studentsCapacity)
         {
             University = university;
             StudentsCapacity = studentsCapacity;
-            Name = NameGenerator.GenerateDepartmentName(university.Field);
+            Name = name;
             GenerateCurriculum();
         }
 
