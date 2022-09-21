@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace University
 {
-    public static class DataProvider
+    public static class NameGenerator
     {
         private static Dictionary<Sex, List<string>> HumanNames { get; } = new Dictionary<Sex, List<string>>()
         {
@@ -35,11 +35,11 @@ namespace University
             return HumanNames[sex][randomNameIndex];
         }
 
-        public static string GenerateSubjectName(University university)
+        public static string GenerateSubjectName(Department department)
         {
             var usedSubjectNames = new List<string>();
 
-            foreach (var subject in university.Subjects)
+            foreach (var subject in department.Subjects)
             {
                 usedSubjectNames.Add(subject.Name);
             }

@@ -8,29 +8,29 @@ namespace University
     {
         public int TeachingLevel { get; set; }
         public int StrictnessLevel { get; set; }
-        public University University { get; set; }
+        public Department Department { get; set; } //TODO use interface
         public Subject Subject { get; set; }
 
-        private Teacher(University university,Subject subject) : base() 
+        private Teacher(Department department,Subject subject) : base() 
                                                          
         {
             int randomTeachingLevel = new Random().Next(1, 11);
             TeachingLevel = randomTeachingLevel;
             StrictnessLevel = new Random().Next(1, 11);
-            University = university;
+            Department = department;
             Subject = subject;
         }
 
-        public static Teacher CreateNew(University university, Subject subject) 
+        public static Teacher CreateNew(Department department, Subject subject) 
         {
-            var newTeacher = new Teacher(university, subject);
+            var newTeacher = new Teacher(department, subject);
             subject.Teacher = newTeacher;
             return newTeacher;
         }
 
         public void ConductAnExam() 
         {
-            University.Exams.Add(new Exam(this));
+            Department.Exams.Add(new Exam(this));
         }
 
 

@@ -11,7 +11,7 @@ namespace University
         public Person()
         {
             Sex = (Sex) new Random().Next(0,2);
-            Name = DataProvider.GeneratePersonName(Sex);
+            Name = NameGenerator.GeneratePersonName(Sex);
         }
     }
     

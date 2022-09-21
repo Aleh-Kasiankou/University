@@ -4,8 +4,8 @@
     {
         Law,
         Communication,
-        Health,
+        HealthCare,
         Technology,
-        Building
+        Architecture
     }
 }
