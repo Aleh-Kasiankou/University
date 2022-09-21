@@ -8,6 +8,8 @@ namespace University
     {
         public bool IsToBeExpelled { get; set; } = false;
         private int RecklessnessLevel { get; set; }
+
+        public Group Group { get; set; } = null;
         private Dictionary<Subject, int> AcademicPerformance { get; } = new Dictionary<Subject, int>();
         public Dictionary<Subject, bool> ExamPerformance { get; } = new Dictionary<Subject, bool>();
 

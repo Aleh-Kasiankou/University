@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            var university = new University("BSUIR");
+            var university = new University("Whatever");
             university.OperateOneYear();
             university.ExcludeStudents();
         }

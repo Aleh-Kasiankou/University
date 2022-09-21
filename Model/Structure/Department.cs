@@ -1,27 +1,31 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace University
 {
-    public class Department
+    public class Department : IStructureElement
     {
         public string Name { get; set; }
         public University University { get; }
-        public int StudentsCapacity { get; }
+        public static int StudentsCapacity { get; } = 200;
         public List<Subject> Subjects { get; set; } = new List<Subject>();
         public List<Teacher> Staff { get; set; } = new List<Teacher>();
         public List<Exam> Exams { get; set; } = new List<Exam>();
         public List<Student> Students { get; set; } = new List<Student>();
 
-        public Department(University university, string name, int studentsCapacity)
+        public IStructureElement ParentStructureElement { get; } = null;
+        public List<IStructureElement> ChildStructureElements { get; set; } = new List<IStructureElement>();
+
+        public Department(University university, string name)
         {
             University = university;
-            StudentsCapacity = studentsCapacity;
             Name = name;
             GenerateCurriculum();
         }
 
         public void OperateOneYear()
         {
+            DivideStudentsToGroups();
             foreach (var student in Students)
             {
                 foreach (var subject in Subjects)
@@ -51,7 +55,7 @@ namespace University
                 }
             }
         }
-        
+
         private void GenerateCurriculum()
         {
             int numberOfSubjects = 0;
@@ -63,6 +67,31 @@ namespace University
                 Subjects.Add(subject);
                 numberOfSubjects++;
             }
+        }
+
+        private void DivideStudentsToGroups()
+        {
+            
+            while (Students.Count(student => student.Group is null) > 0)
+            {
+                
+                var groupStudents = new List<Student>();
+                var addedStudents = new List<Student>();
+                while (Students.Count(student => student.Group is null) > addedStudents.Count && groupStudents.Count < Group.StudentsCapacity)
+                {
+                    var student = Students.First(student => student.Group is null && !addedStudents.Contains(student));
+                    groupStudents.Add(student);
+                    addedStudents.Add(student);
+                }
+
+                var group = new Group(this, groupStudents);
+                foreach (var student in group.Students)
+                {
+                    student.Group = group;
+                }
+                ChildStructureElements.Add(group);
+            }
+            Group.ResetNameHash();
         }
     }
 }

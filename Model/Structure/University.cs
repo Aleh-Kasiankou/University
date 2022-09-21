@@ -37,7 +37,19 @@ namespace University
         {
             foreach (var department in Departments)
             {
-                for (int studentsGenerated = 0; studentsGenerated < department.StudentsCapacity; studentsGenerated++)
+                int optimalStudentsCount;
+                if ( Equals(department, Departments.Last()))
+                {
+                    optimalStudentsCount = StudentsCapacity -
+                                           (from dep in Departments select dep.Students.Count).Sum();
+                }
+
+                else
+                {
+                    optimalStudentsCount = (StudentsCapacity / Departments.Count);
+                }
+                
+                for (int studentsGenerated = 0; studentsGenerated < optimalStudentsCount; studentsGenerated++)
                 {
                     var student = new Student();
                     department.Students.Add(student);
@@ -91,19 +103,7 @@ namespace University
                     optimalNumberOfDeps = maxDepartments;
                 }
 
-                int optimalStudentsCount;
-                if (Departments.Count == optimalNumberOfDeps - 1)
-                {
-                    optimalStudentsCount = StudentsCapacity -
-                                           (from department in Departments select department.StudentsCapacity).Sum();
-                }
-
-                else
-                {
-                    optimalStudentsCount = (StudentsCapacity / optimalNumberOfDeps);
-                }
-                
-                Departments.Add(new Department(this, name ,optimalStudentsCount ));
+                Departments.Add(new Department(this, name));
             }
         }
 
