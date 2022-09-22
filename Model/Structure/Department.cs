@@ -52,14 +52,19 @@ namespace University
                 foreach (var exam in Exams)
                 {
                     student.TakeExam(exam);
-                    for (int reexaminationAttempt = 1; reexaminationAttempt < 3; reexaminationAttempt++)
+                    if (student.ExamPerformance[exam.Teacher.Subject] == false)
                     {
-                        student.RetakeAnExam(exam, reexaminationAttempt);
-                        if (reexaminationAttempt == 2 && !student.ExamPerformance[exam.Teacher.Subject])
+                        for (int reexaminationAttempt = 1; reexaminationAttempt < 3; reexaminationAttempt++)
                         {
-                            student.IsToBeExpelled = true;
+                            student.RetakeAnExam(exam, reexaminationAttempt);
+                            if (reexaminationAttempt == 2 && !student.ExamPerformance[exam.Teacher.Subject])
+                            {
+                                student.IsToBeExpelled = true;
+                            }
                         }
                     }
+     
+                    
                 }
             }
         }
