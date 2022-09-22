@@ -41,6 +41,7 @@ namespace University
             GenerateDepartments();
             var hrSpecialist = Administration.First(specialist => specialist is Hr);
             hrSpecialist.Work();
+            AdmitStudents();
         }
 
 
@@ -71,7 +72,6 @@ namespace University
         public void OperateOneYear()
         {
             PrepareForYear();
-            AdmitStudents();
             foreach (var department in Departments)
             {
                 department.OperateOneYear();

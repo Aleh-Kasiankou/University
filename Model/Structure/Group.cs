@@ -29,7 +29,8 @@ namespace University
 
         public void MoveToNextYear()
         {
-            Year++;
+            Year += 1;
+            Name = UpdateName();
         }
 
         public static void ResetNameHash()

@@ -52,37 +52,22 @@ namespace University
                 foreach (var exam in Exams)
                 {
                     student.TakeExam(exam);
-                    if (student.ExamPerformance[exam.Teacher.Subject] == false)
+                    int reexaminationAttempt = 1;
+                    while (student.ExamPerformance[exam.Teacher.Subject] == false && reexaminationAttempt <= 2)
                     {
-                        for (int reexaminationAttempt = 1; reexaminationAttempt < 3; reexaminationAttempt++)
+                        student.RetakeAnExam(exam, reexaminationAttempt);
+                        if (reexaminationAttempt == 2 && !student.ExamPerformance[exam.Teacher.Subject])
                         {
-                            student.RetakeAnExam(exam, reexaminationAttempt);
-                            if (reexaminationAttempt == 2 && !student.ExamPerformance[exam.Teacher.Subject])
-                            {
-                                student.IsToBeExpelled = true;
-                            }
+                            student.IsToBeExpelled = true;
+                            
                         }
+
+                        reexaminationAttempt++;
                     }
-     
-                    
                 }
             }
         }
 
-        private void GenerateCurriculum()
-        {
-            List<IStaffMember> deanList = University.Administration.FindAll(
-                specialist => specialist is Dean);
-
-            foreach (Dean dean in deanList)
-            {
-                if (dean.Department == this)
-                {
-                    dean.Work();
-                    break;
-                }
-            }
-        }
 
         private void DivideStudentsToGroups()
         {
